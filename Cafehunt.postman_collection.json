@@ -1,0 +1,1716 @@
+{
+	"info": {
+		"_postman_id": "9dec0508-6606-4ff7-95f6-f66ddc99199c",
+		"name": "Cafehunt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19150616"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"item": [
+				{
+					"name": "Registration with existing credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"pm.test(\"Error message about existing user\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"detail\":\"REGISTER_USER_ALREADY_EXISTS\"`);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test1@example.com\",\n  \"password\": \"12345678?Aa\",\n  \"is_active\": true,\n  \"is_superuser\": false,\n  \"is_verified\": false,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registration with invalid password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"pm.test(\"Error message about invalid password\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"msg\":\"Password must be between 8 and 30 characters\"`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"marina123@example.com\",\n    \"password\": \"12345\",\n    \"is_active\": true,\n    \"is_superuser\": false,\n    \"is_verified\": false,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registration with blank password field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"pm.test(\"Error message about blank password field\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"msg\":\"Password must be between 8 and 30 characters\"`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"marina123@example.com\",\n    \"password\": \"\",\n    \"is_active\": true,\n    \"is_superuser\": false,\n    \"is_verified\": false,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registration with invalid email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"pm.test(\"Error message about invalid email\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"msg\":\"value is not a valid email address\"`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"marina123example.com\",\n    \"password\": \"12345\",\n    \"is_active\": true,\n    \"is_superuser\": false,\n    \"is_verified\": false,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registration with blank email field",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"pm.test(\"Error message about blank email field\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"msg\":\"value is not a valid email address\"`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"\",\n    \"password\": \"12345\",\n    \"is_active\": true,\n    \"is_superuser\": false,\n    \"is_verified\": false,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registration with valid data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const email = pm.variables.replaceIn('{{$randomEmail}}');",
+									"pm.environment.set('email', email)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"Test1111\",\n    \"is_active\": true,\n    \"is_superuser\": false,\n    \"is_verified\": false,\n    \"first_name\": \"str\",\n    \"last_name\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "successful login with prerequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();",
+									"pm.environment.set(\"token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"eval(environment.registration)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{email}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Test1111",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/auth/jwt/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"jwt",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unsuccessful login without password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "marina1111@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/auth/jwt/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"jwt",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unsuccessful login without email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456Aa?",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/auth/jwt/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"jwt",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unsuccessful login with unregistered user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "marina@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678Aa?",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/auth/jwt/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"jwt",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get cafe",
+			"item": [
+				{
+					"name": "Get cafe list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get vacant places",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/cafes/8/places/?date=2023.09.18 18",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"8",
+								"places",
+								""
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2023.09.18 18"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  list of favourites cafe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/cafes/favourite/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"favourite",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cafe by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes/1/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cafe by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes?name=Shtrudel",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Shtrudel"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cafe by name and vegan menu",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes?name=Shtrudel&has_vegan_menu=true",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Shtrudel"
+								},
+								{
+									"key": "has_vegan_menu",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cafe by id and rating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes?rating=4&city_id=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes"
+							],
+							"query": [
+								{
+									"key": "rating",
+									"value": "4"
+								},
+								{
+									"key": "city_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cafe by id and rating and average_bill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes?rating=4&city_id=1&average_bill=cheap",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes"
+							],
+							"query": [
+								{
+									"key": "rating",
+									"value": "4"
+								},
+								{
+									"key": "city_id",
+									"value": "1"
+								},
+								{
+									"key": "average_bill",
+									"value": "cheap"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cafe by id and rating=1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes?rating=1&city_id=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes"
+							],
+							"query": [
+								{
+									"key": "rating",
+									"value": "1"
+								},
+								{
+									"key": "city_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vacant places for unauthorized users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiYXVkIjpbImZhc3RhcGktdXNlcnM6YXV0aCJdLCJleHAiOjE2ODgwNjYzMzZ9.fs4vy_QtiLHKJ3jNn9Vprvk57IuqHJf6V9Z-s9DD_gI",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/cafes/15/places?date=30.06.2023 12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"15",
+								"places"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "30.06.2023 12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vacant places for authorized users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/cafes/15/places/?date=2023.12.28 13",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"15",
+								"places",
+								""
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2023.12.28 13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cafes by city",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes?city_id=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes"
+							],
+							"query": [
+								{
+									"key": "city_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Explore new places",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes/explore_new/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"explore_new",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add/Delete favourite cafe",
+			"item": [
+				{
+					"name": "Add cafe to favourites for unauthorites users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cafes/3/add_delete_favourite/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"3",
+								"add_delete_favourite",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add cafe to favourites for authorites users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/cafes/15/add_delete_favourite/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"15",
+								"add_delete_favourite",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete cafe from favourites for authorites users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/cafes/15/add_delete_favourite/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cafes",
+								"15",
+								"add_delete_favourite",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order cafe",
+			"item": [
+				{
+					"name": "Order a cafe with unauthorized user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Try to order without registration\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"detail\":\"Unauthorized\"`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cafe_id\": 123,\n  \"places\": 2,\n  \"booking_date\": \"2023.06.14 12\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  user orders with unauthorized user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Try to get orders without registration\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"detail\":\"Unauthorized\"`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cafe_id\": 123,\n  \"places\": 2,\n  \"booking_date\": \"2023.06.14 12\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order a cafe with authorized user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cafe_id\": 8,\n  \"places\": 1,\n  \"booking_date\": \"2023.12.29 12\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  user orders with authorized user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();",
+									"pm.environment.set(\"order_id\", pm.response.json().items[0].id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/orders/{{order_id}}/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"orders",
+								"{{order_id}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get all cities",
+			"item": [
+				{
+					"name": "Get cities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cities",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get current user with authorized status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user with unauthorized status ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"pm.test(\"Forbidden message\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"detail\":\"Forbidden\"`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete existing user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"pm.test(\"Delete user is forbidden\", function () {",
+									"    pm.expect(pm.response.text()).to.include(`\"detail\":\"Forbidden\"`);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password for user with authorized status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"{{$randomPassword}}\",\n  \"email\": \"{{email}}\",\n  \"is_active\": true,\n  \"is_superuser\": true,\n  \"is_verified\": true,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"phone_number\": \"+80961111111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change phone_number for user with authorized status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"eval(globals.basicTests)();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"string\",\n  \"email\": \"{{email}}\",\n  \"is_active\": true,\n  \"is_superuser\": true,\n  \"is_verified\": true,\n  \"first_name\": \"test\",\n  \"last_name\": \"string\",\n  \"phone_number\": \"{{$randomPhoneNumberExt}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/auth/jwt/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"jwt",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"postman.setGlobalVariable('basicTests', ()=> {",
+					"    pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"pm.test(\"Response time is less than 2000ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+					"});",
+					" });",
+					"",
+					"postman.setEnvironmentVariable('registration', ()=> {",
+					"const url = pm.environment.get('url');",
+					"const email = pm.variables.replaceIn('{{$randomEmail}}');",
+					"",
+					"",
+					"const registrationRequest = {",
+					"url: url + '/auth' + '/register',",
+					"method: 'POST',",
+					"header: {",
+					"'Content-Type': 'application/json',",
+					"},",
+					"body: {",
+					"mode: 'raw',",
+					"raw: JSON.stringify({",
+					"    \"email\": email,",
+					"    \"password\": \"Test1111\",",
+					"    \"is_active\": true,",
+					"    \"is_superuser\": false,",
+					"    \"is_verified\": false,",
+					"    \"first_name\": \"str\",",
+					"    \"last_name\": \"string\"",
+					"})",
+					"}",
+					"};",
+					"",
+					"pm.sendRequest(registrationRequest, (error, response) => {",
+					"console.log(error ? error : response.json());",
+					"pm.environment.set(\"email\", response.json().email);",
+					"});",
+					"});",
+					"",
+					"",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
